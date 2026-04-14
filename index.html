@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>中国股市历史警示墙：1990—2024 牛市、熊市与重大崩盘档案</title>
+  <style>
+    :root {
+      --bg: #f3f0e8;
+      --paper: #fbfaf6;
+      --ink: #2f3338;
+      --muted: #66707a;
+      --border: #d8d2c6;
+      --warm: #8b4a42;
+      --cool: #3f5b78;
+      --neutral: #5f6660;
+      --accent: #7a1f1f;
+      --shadow: 0 3px 10px rgba(0,0,0,0.06);
+      --radius: 10px;
+      --transition: all 0.2s ease;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.7;
+      letter-spacing: 0.2px;
+    }
+
+    .container {
+      width: min(1160px, 92vw);
+      margin: 0 auto;
+      padding: 24px 0 100px;
+    }
+
+    .paper {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    header {
+      padding: 26px 28px;
+      margin-bottom: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: "ARCHIVE";
+      position: absolute;
+      right: 18px;
+      top: 8px;
+      font-size: 44px;
+      font-weight: 700;
+      color: rgba(122,31,31,0.06);
+      user-select: none;
+      pointer-events: none;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(26px, 3.2vw, 38px);
+      line-height: 1.25;
+      letter-spacing: 0.6px;
+    }
+    .subtitle {
+      margin: 0 0 14px;
+      color: var(--accent);
+      font-weight: 600;
+      font-size: clamp(15px, 1.8vw, 19px);
+    }
+    .desc {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      max-width: 980px;
+    }
+    .disclaimer {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-left: 4px solid var(--accent);
+      background: #f9f3f3;
+      color: #5d2c2c;
+      font-size: 13px;
+    }
+
+    .section-title {
+      margin: 0 0 10px;
+      font-size: 17px;
+      font-weight: 700;
+      color: #30363d;
+    }
+
+    .overview, .filters, .timeline, footer {
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(150px, 1fr));
+      gap: 10px;
+    }
+    .stat-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fffdf8;
+      min-height: 82px;
+    }
+    .stat-label {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+    .stat-value {
+      font-size: 23px;
+      font-weight: 700;
+      line-height: 1.1;
+      color: #2c2f33;
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr auto;
+      gap: 10px;
+      align-items: end;
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .field label {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    input[type="search"], select, button {
+      border: 1px solid #c9c2b6;
+      border-radius: 7px;
+      padding: 9px 10px;
+      font-size: 14px;
+      background: #fff;
+      color: var(--ink);
+    }
+    input[type="search"]:focus, select:focus {
+      outline: none;
+      border-color: #8a7d69;
+      box-shadow: 0 0 0 2px rgba(138,125,105,0.15);
+    }
+    .btn {
+      cursor: pointer;
+      transition: var(--transition);
+      background: #fffdf8;
+    }
+    .btn:hover { background: #f5efe2; }
+    .btn-danger {
+      background: #f7ecec;
+      border-color: #d2b7b7;
+      color: #6a2c2c;
+    }
+
+    .result-summary {
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .timeline-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .archive-card {
+      border: 1px solid var(--border);
+      border-left: 6px solid #777;
+      border-radius: 8px;
+      background: #fffefb;
+      overflow: hidden;
+    }
+    .archive-card.type-hype { border-left-color: var(--warm); }
+    .archive-card.type-crash { border-left-color: var(--cool); }
+    .archive-card.type-reform { border-left-color: var(--neutral); }
+
+    .archive-head {
+      padding: 12px 14px;
+      border-bottom: 1px dashed #ddd6ca;
+      background: #fffaf1;
+    }
+    .archive-meta-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .badge {
+      display: inline-block;
+      font-size: 12px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      border: 1px solid #d1c9bb;
+      background: #f4efe4;
+      color: #4a4f55;
+    }
+    .badge-hype { background: #f3e3e1; border-color: #d8b9b4; color: #6b332d; }
+    .badge-crash { background: #e7edf4; border-color: #bfcddd; color: #2f4a66; }
+    .badge-reform { background: #ebeeea; border-color: #c8d0c8; color: #435044; }
+    .badge-unverified {
+      background: #f9e5e5;
+      border-color: #d9a9a9;
+      color: #7a1f1f;
+      font-weight: 700;
+    }
+
+    .archive-title {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.4;
+    }
+    .archive-sub {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .archive-body {
+      padding: 12px 14px 14px;
+    }
+    .summary {
+      margin-bottom: 10px;
+      color: #3b4046;
+      font-size: 14px;
+    }
+    .warning {
+      padding: 8px 10px;
+      background: #f8f2e9;
+      border-left: 3px solid #ab7a34;
+      font-size: 13px;
+      color: #5b4730;
+      margin-bottom: 10px;
+    }
+    .unverified-alert {
+      padding: 8px 10px;
+      background: #fcecec;
+      border-left: 3px solid #b94a48;
+      color: #6f1f1f;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    details {
+      border-top: 1px dashed #ddd6ca;
+      padding-top: 10px;
+    }
+    summary {
+      cursor: pointer;
+      list-style: none;
+      user-select: none;
+      font-size: 14px;
+      color: #3f4a55;
+      font-weight: 600;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before {
+      content: "▶";
+      display: inline-block;
+      margin-right: 6px;
+      transition: transform .15s ease;
+      font-size: 12px;
+    }
+    details[open] summary::before { transform: rotate(90deg); }
+
+    .details-grid {
+      margin-top: 8px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 16px;
+      font-size: 13px;
+    }
+    .details-grid .item {
+      background: #fff;
+      border: 1px solid #e6dfd2;
+      border-radius: 6px;
+      padding: 8px 9px;
+    }
+    .k {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .v {
+      color: #2f3338;
+      word-break: break-word;
+      line-height: 1.55;
+    }
+
+    .no-data {
+      text-align: center;
+      color: #6a7178;
+      padding: 28px 10px;
+      border: 1px dashed #cfc7ba;
+      border-radius: 8px;
+      background: #fff;
+      margin-top: 8px;
+    }
+
+    footer {
+      color: #59616a;
+      font-size: 13px;
+    }
+    footer p { margin: 8px 0; }
+
+    .floating-tools {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 12;
+    }
+    .floating-tools button {
+      min-width: 120px;
+      padding: 10px 12px;
+      box-shadow: var(--shadow);
+      background: #fffaf0;
+      border-color: #c8bea8;
+    }
+    .floating-tools button:hover { background: #f4ecdb; }
+
+    @media (max-width: 980px) {
+      .stats-grid { grid-template-columns: repeat(2, minmax(150px, 1fr)); }
+      .filter-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 620px) {
+      .details-grid { grid-template-columns: 1fr; }
+      .floating-tools button { min-width: 96px; font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="paper">
+      <h1>中国股市历史警示墙</h1>
+      <p class="subtitle">1990—2024 牛市、熊市与重大崩盘档案</p>
+      <p class="desc">
+        本页用于历史回顾与风险警示，强调“当时认知”与“事后验证”的差异；聚焦市场狂热叙事、下跌兑现过程与制度转折节点，帮助建立纪律化的长期记忆。
+      </p>
+      <div class="disclaimer">
+        说明：本页为本地档案化展示工具，不构成任何投资建议。下方示例条目仅用于结构与视觉演示，不视为全部已核实最终史料；若为归纳性转述会单独标注，正式使用前需逐条核对。
+      </div>
+    </header>
+
+    <section class="overview paper">
+      <h2 class="section-title">概览</h2>
+      <div class="stats-grid" id="statsGrid"></div>
+    </section>
+
+    <section class="filters paper">
+      <h2 class="section-title">筛选与检索</h2>
+      <div class="filter-grid">
+        <div class="field">
+          <label for="searchInput">关键词搜索（标题 / 引语 / 标签 / 事件）</label>
+          <input id="searchInput" type="search" placeholder="例如：杠杆、熔断、国企改革、估值..." />
+        </div>
+        <div class="field">
+          <label for="yearFilter">年份</label>
+          <select id="yearFilter"></select>
+        </div>
+        <div class="field">
+          <label for="phaseFilter">市场阶段</label>
+          <select id="phaseFilter"></select>
+        </div>
+        <div class="field">
+          <label for="typeFilter">档案类型</label>
+          <select id="typeFilter"></select>
+        </div>
+        <div class="field">
+          <label for="verifyFilter">证据状态</label>
+          <select id="verifyFilter"></select>
+        </div>
+        <button class="btn btn-danger" id="clearFilters">清空筛选</button>
+      </div>
+      <div class="result-summary" id="resultSummary"></div>
+    </section>
+
+    <section class="timeline paper">
+      <h2 class="section-title">主时间线档案</h2>
+      <div id="timelineList" class="timeline-list"></div>
+      <div id="noData" class="no-data" style="display:none;">
+        未找到符合当前条件的档案。请尝试放宽筛选条件或清空筛选。
+      </div>
+    </section>
+
+    <footer class="paper">
+      <p><strong>用途说明：</strong>本页用于“历史警示墙”式复盘，强调纪律教育与风险认知，不提供交易信号。</p>
+      <p><strong>数据结构说明：</strong>全部档案由统一字段对象构成（见脚本中的 <code>archives</code> 数组），可持续手工增补。</p>
+      <p><strong>增补建议：</strong>新增条目时按同字段模板录入，并补充来源、引语、核对状态与证据等级。</p>
+      <p><strong>重要提示：</strong>示例数据仅为结构展示，正式使用前需逐条核对史料，不构成投资建议。</p>
+    </footer>
+  </div>
+
+  <div class="floating-tools">
+    <button class="btn" id="expandAllBtn">一键展开全部</button>
+    <button class="btn" id="collapseAllBtn">一键收起全部</button>
+    <button class="btn" id="toTopBtn">返回顶部</button>
+  </div>
+
+  <script>
+    const archives = [
+      {
+        id: "A-1992-001",
+        date: "1992-05-21",
+        year: 1992,
+        title: "上交所放开涨跌幅限制后的首个交易日剧烈波动",
+        eventName: "价格限制放开与早期交易狂热",
+        phase: "早期探索",
+        archiveType: "狂热档案",
+        source: "《上海证券交易所志》、上交所历史行情资料",
+        quote: "“单日大幅波动揭示了早期市场定价机制与情绪交易并存。”（归纳）",
+        quoteType: "归纳性转述",
+        marketData: "上证指数当日上涨约105.27%（历史记录常见口径）",
+        atmosphere: "开户与交易热情高涨，短期暴富叙事明显，风险教育不足。",
+        hindsight: "在制度尚未成熟阶段，交易规则微调会被情绪放大为超常波动。",
+        warning: "早期市场里，流动性与预期会共同放大波动，规则变化尤需敬畏。",
+        evidenceLevel: "高",
+        verificationStatus: "双源核对",
+        tags: ["涨跌幅放开", "历史最大单日涨幅", "早期制度"]
+      },
+      {
+        id: "A-1994-011",
+        date: "1994-07-29",
+        year: 1994,
+        title: "“三大救市政策”出台后市场急速反弹",
+        eventName: "政策托底与信心修复尝试",
+        phase: "早期探索",
+        archiveType: "制度重构档案",
+        source: "证监系统历史资料、当年财经报刊",
+        quote: "“暂停新股发行、控制融资节奏、引导长期资金入市。”（政策归纳）",
+        quoteType: "归纳性转述",
+        marketData: "政策发布后沪市出现快速反弹（具体点位可继续补录）",
+        atmosphere: "长期下跌后，市场对政策托底高度敏感，情绪从悲观转向抢反弹。",
+        hindsight: "政策可修复风险偏好，但长期走势仍需盈利与制度基础支撑。",
+        warning: "政策底不必然等于市场底，修复常呈反复过程。",
+        evidenceLevel: "中",
+        verificationStatus: "单源核对",
+        tags: ["三大救市", "政策托底", "反弹"]
+      },
+      {
+        id: "A-1996-002",
+        date: "1996-12-16",
+        year: 1996,
+        title: "人民日报特约评论员文章后市场降温",
+        eventName: "早期市场过热后的政策降温",
+        phase: "规范化初期",
+        archiveType: "制度重构档案",
+        source: "《人民日报》1996-12-16评论、交易数据",
+        quote: "“坚决抑制过度投机，维护市场秩序。”",
+        quoteType: "可溯源原话",
+        marketData: "当日沪指大幅下跌，投机板块热度回落",
+        atmosphere: "此前“只涨不跌”叙事被打断，市场开始讨论规则边界。",
+        hindsight: "监管信号在高估值阶段具有再定价效应，情绪拐点常先于基本面变化。",
+        warning: "当叙事脱离规则约束，回调往往以突发方式到来。",
+        evidenceLevel: "高",
+        verificationStatus: "双源核对",
+        tags: ["监管", "降温", "投机"]
+      },
+      {
+        id: "A-1999-012",
+        date: "1999-05-19",
+        year: 1999,
+        title: "“5·19”行情启动与科技成长叙事扩散",
+        eventName: "政策与成长预期共振的阶段性牛市",
+        phase: "规范化初期",
+        archiveType: "狂热档案",
+        source: "交易所历史行情、主流财经报刊",
+        quote: "“新经济重估将重塑估值中枢。”（当年常见叙事归纳）",
+        quoteType: "归纳性转述",
+        marketData: "1999年5月下旬起市场成交放大、指数快速上行",
+        atmosphere: "科技与改革叙事共振，风险偏好显著抬升。",
+        hindsight: "主题扩散能快速抬升估值，但兑现节奏错配时波动也会放大。",
+        warning: "叙事驱动行情需警惕估值与业绩错配。",
+        evidenceLevel: "中",
+        verificationStatus: "单源核对",
+        tags: ["5·19", "成长叙事", "主题扩散"]
+      },
+      {
+        id: "A-2001-003",
+        date: "2001-06-12",
+        year: 2001,
+        title: "国有股减持方案引发估值体系重估",
+        eventName: "政策预期重估（公告日与交易反应日需区分）",
+        phase: "规范化初期",
+        archiveType: "崩溃档案",
+        source: "财政部相关通知（2001-06-12）与后续交易日行情",
+        quote: "“估值体系将迎来系统性重构。”（归纳）",
+        quoteType: "归纳性转述",
+        marketData: "6月12日政策发布，6月14日前后市场下行反应更明显",
+        atmosphere: "投资者从追涨转向防御，场内悲观预期蔓延。",
+        hindsight: "估值扩张逻辑遭遇制度与供给预期变化时，熊市可能持续多年。",
+        warning: "高估值若缺乏盈利兑现，政策扰动易触发估值回归。",
+        evidenceLevel: "高",
+        verificationStatus: "双源核对",
+        tags: ["国有股减持", "估值回归", "日期区分"]
+      },
+      {
+        id: "A-2007-004",
+        date: "2007-10-16",
+        year: 2007,
+        title: "上证指数创下6124.04点历史高位",
+        eventName: "改革牛后期情绪顶点",
+        phase: "改革牛",
+        archiveType: "狂热档案",
+        source: "交易所历史行情、券商策略资料",
+        quote: "“这一次不同，居民资产重配刚刚开始。”（当年流行叙事）",
+        quoteType: "归纳性转述",
+        marketData: "上证指数盘中创6124.04点，估值与换手率处于高位",
+        atmosphere: "开户潮与基金热销叠加，全民讨论目标位。",
+        hindsight: "“这一次不同”常是顶部叙事模板，风险补偿在极致乐观时被忽视。",
+        warning: "当收益预期成为社会共识，边际买盘往往接近枯竭。",
+        evidenceLevel: "高",
+        verificationStatus: "双模型复核",
+        tags: ["6124", "全民牛市", "顶部叙事"]
+      },
+      {
+        id: "A-2008-005",
+        date: "2008-10-28",
+        year: 2008,
+        title: "全球金融危机冲击下A股触及阶段低点",
+        eventName: "外部冲击与风险资产同步下挫",
+        phase: "改革牛",
+        archiveType: "崩溃档案",
+        source: "交易所历史行情、全球市场数据",
+        quote: "“去杠杆环境下，风险偏好快速坍塌。”（归纳）",
+        quoteType: "归纳性转述",
+        marketData: "上证指数阶段低点约1664点（2008-10-28）",
+        atmosphere: "从“逢调即买”转为“先求不亏”，风险厌恶占主导。",
+        hindsight: "外部流动性冲击会压缩风险资产估值，相关性在危机中显著上升。",
+        warning: "危机中先活下来，再谈收益；仓位纪律重于预测能力。",
+        evidenceLevel: "高",
+        verificationStatus: "双源核对",
+        tags: ["金融危机", "1664", "风险偏好"]
+      },
+      {
+        id: "A-2015-006",
+        date: "2015-06-12",
+        year: 2015,
+        title: "杠杆牛见顶后快速连锁下跌",
+        eventName: "融资盘拥挤与踩踏",
+        phase: "杠杆牛",
+        archiveType: "崩溃档案",
+        source: "两融数据、交易所行情、监管通告",
+        quote: "“配资放大收益，也会放大回撤速度。”（归纳）",
+        quoteType: "归纳性转述",
+        marketData: "上证指数于6月中旬见顶约5178点后急挫",
+        atmosphere: "高杠杆账户强平压力引发连锁卖出，恐慌迅速扩散。",
+        hindsight: "杠杆驱动的上涨在流动性反转时呈非线性下跌特征。",
+        warning: "借来的上涨终要偿还，杠杆是收益放大器也是亏损倍增器。",
+        evidenceLevel: "高",
+        verificationStatus: "双模型复核",
+        tags: ["杠杆", "强平", "5178"]
+      },
+      {
+        id: "A-2016-007",
+        date: "2016-01-07",
+        year: 2016,
+        title: "熔断机制最后一次触发与随即暂停",
+        eventName: "交易制度试验的市场适配问题",
+        phase: "结构性行情",
+        archiveType: "制度重构档案",
+        source: "交易规则公告（2016-01-04首次触发，01-07最后触发）",
+        quote: "“良好制度需与交易行为和流动性结构匹配。”（归纳）",
+        quoteType: "归纳性转述",
+        marketData: "1月4日首次触发，1月7日二次触发后机制暂停",
+        atmosphere: "市场参与者对机制预期混乱，避险情绪放大。",
+        hindsight: "制度设计若与行为反馈形成负循环，会加剧短期波动。",
+        warning: "规则是市场的地基，机制微调也可能触发系统性反馈。",
+        evidenceLevel: "高",
+        verificationStatus: "双源核对",
+        tags: ["熔断", "最后触发日", "制度适配"]
+      },
+      {
+        id: "A-2018-008",
+        date: "2018-10-19",
+        year: 2018,
+        title: "去杠杆与信用收缩下的重要低位节点",
+        eventName: "信用周期下行与权益估值压缩",
+        phase: "结构性行情",
+        archiveType: "崩溃档案",
+        source: "交易所行情、信用利差数据、政策沟通材料",
+        quote: "“流动性与信用是估值的底层变量。”（归纳）",
+        quoteType: "归纳性转述",
+        marketData: "上证指数盘中跌破2500点，信用分层明显",
+        atmosphere: "机构防御优先，投资者风险偏好整体下移。",
+        hindsight: "信用收缩期，盈利和估值可能双向承压，修复依赖政策与预期稳定。",
+        warning: "看见价格下跌，更要看见信用收缩速度。",
+        evidenceLevel: "高",
+        verificationStatus: "双源核对",
+        tags: ["2500点", "去杠杆", "信用收缩"]
+      },
+      {
+        id: "A-2020-009",
+        date: "2020-07-06",
+        year: 2020,
+        title: "流动性宽松背景下的单日放量急涨",
+        eventName: "复苏预期与风险偏好快速回升",
+        phase: "结构性行情",
+        archiveType: "狂热档案",
+        source: "交易所行情、成交额数据、当期策略报告",
+        quote: "“增量资金入场，风格切换提速。”（当期常见表述）",
+        quoteType: "归纳性转述",
+        marketData: "上证指数单日约+5.7%，两市成交额突破1.5万亿元",
+        atmosphere: "“错过焦虑”抬头，短周期博弈增强。",
+        hindsight: "该节点更接近阶段性情绪峰值而非终局顶部，后续仍有上行。",
+        warning: "单日亢奋并不必然等于大顶，但会提高波动与回撤风险。",
+        evidenceLevel: "高",
+        verificationStatus: "双源核对",
+        tags: ["单日急涨", "1.5万亿成交", "情绪峰值"]
+      },
+      {
+        id: "A-2024-010",
+        date: "2024-02-05",
+        year: 2024,
+        title: "政策稳预期密集期与市场修复尝试",
+        eventName: "预期管理与制度优化并行",
+        phase: "结构性行情",
+        archiveType: "制度重构档案",
+        source: "证监会公开答记者问与交易所公开举措汇编（待补具体链接）",
+        quote: "“稳定预期、优化机制、提升中长期信心。”（归纳性表述，待补原文出处）",
+        quoteType: "归纳性转述",
+        marketData: "指数波动加大后出现阶段修复，结构分化仍在",
+        atmosphere: "情绪从极度谨慎向观望修复过渡。",
+        hindsight: "该条仍属进行时观察，需要后续持续补充可验证材料。",
+        warning: "未完全核实的条目只能作为线索，不可直接作为结论。",
+        evidenceLevel: "中",
+        verificationStatus: "未核",
+        tags: ["进行时", "政策预期", "待补出处"]
+      }
+    ];
+
+    const PHASE_OPTIONS = ["全部", "早期探索", "规范化初期", "改革牛", "杠杆牛", "结构性行情"];
+    const TYPE_OPTIONS = ["全部", "狂热档案", "崩溃档案", "制度重构档案"];
+    const VERIFY_OPTIONS = ["全部", "未核", "单源核对", "双源核对", "双模型复核"];
+
+    const statsGrid = document.getElementById("statsGrid");
+    const timelineList = document.getElementById("timelineList");
+    const noData = document.getElementById("noData");
+    const resultSummary = document.getElementById("resultSummary");
+
+    const searchInput = document.getElementById("searchInput");
+    const yearFilter = document.getElementById("yearFilter");
+    const phaseFilter = document.getElementById("phaseFilter");
+    const typeFilter = document.getElementById("typeFilter");
+    const verifyFilter = document.getElementById("verifyFilter");
+    const clearFiltersBtn = document.getElementById("clearFilters");
+
+    const expandAllBtn = document.getElementById("expandAllBtn");
+    const collapseAllBtn = document.getElementById("collapseAllBtn");
+    const toTopBtn = document.getElementById("toTopBtn");
+
+    init();
+
+    function init() {
+      buildSelectOptions();
+      renderStats(archives);
+      renderTimeline(archives);
+      bindEvents();
+    }
+
+    function buildSelectOptions() {
+      const years = [...new Set(archives.map(a => a.year))].sort((a, b) => a - b);
+      const yearOptions = ["全部", ...years.map(String)];
+
+      populateSelect(yearFilter, yearOptions);
+      populateSelect(phaseFilter, PHASE_OPTIONS);
+      populateSelect(typeFilter, TYPE_OPTIONS);
+      populateSelect(verifyFilter, VERIFY_OPTIONS);
+    }
+
+    function populateSelect(selectEl, options) {
+      selectEl.innerHTML = options.map(opt => `<option value="${opt}">${opt}</option>`).join("");
+    }
+
+    function bindEvents() {
+      [searchInput, yearFilter, phaseFilter, typeFilter, verifyFilter].forEach(el => {
+        el.addEventListener("input", applyFilters);
+        el.addEventListener("change", applyFilters);
+      });
+
+      clearFiltersBtn.addEventListener("click", () => {
+        searchInput.value = "";
+        yearFilter.value = "全部";
+        phaseFilter.value = "全部";
+        typeFilter.value = "全部";
+        verifyFilter.value = "全部";
+        applyFilters();
+      });
+
+      expandAllBtn.addEventListener("click", () => {
+        document.querySelectorAll(".archive-card details").forEach(d => d.open = true);
+      });
+
+      collapseAllBtn.addEventListener("click", () => {
+        document.querySelectorAll(".archive-card details").forEach(d => d.open = false);
+      });
+
+      toTopBtn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    }
+
+    function applyFilters() {
+      const keyword = searchInput.value.trim().toLowerCase();
+      const year = yearFilter.value;
+      const phase = phaseFilter.value;
+      const type = typeFilter.value;
+      const verify = verifyFilter.value;
+
+      const filtered = archives.filter(item => {
+        const haystack = [
+          item.id, item.date, item.title, item.eventName, item.phase, item.archiveType,
+          item.source, item.quote, item.marketData, item.atmosphere, item.hindsight,
+          item.warning, item.evidenceLevel, item.verificationStatus, ...(item.tags || [])
+        ].join(" ").toLowerCase();
+
+        const matchKeyword = !keyword || haystack.includes(keyword);
+        const matchYear = year === "全部" || String(item.year) === year;
+        const matchPhase = phase === "全部" || item.phase === phase;
+        const matchType = type === "全部" || item.archiveType === type;
+        const matchVerify = verify === "全部" || item.verificationStatus === verify;
+
+        return matchKeyword && matchYear && matchPhase && matchType && matchVerify;
+      });
+
+      renderStats(filtered);
+      renderTimeline(filtered);
+    }
+
+    function renderStats(currentList) {
+      const total = currentList.length;
+      const hype = countBy(currentList, a => a.archiveType === "狂热档案");
+      const crash = countBy(currentList, a => a.archiveType === "崩溃档案");
+      const reform = countBy(currentList, a => a.archiveType === "制度重构档案");
+      const doubleChecked = countBy(currentList, a => a.verificationStatus === "双源核对" || a.verificationStatus === "双模型复核");
+      const pending = countBy(currentList, a => a.verificationStatus === "未核");
+
+      const stats = [
+        { label: "时间范围", value: "1990—2024" },
+        { label: "档案总数（当前结果）", value: total },
+        { label: "狂热档案数量", value: hype },
+        { label: "崩溃档案数量", value: crash },
+        { label: "制度转折档案数量", value: reform },
+        { label: "已双重核对数量", value: doubleChecked },
+        { label: "待核对数量（未核）", value: pending },
+        { label: "完整库样本数", value: archives.length }
+      ];
+
+      statsGrid.innerHTML = stats.map(s => `
+        <div class="stat-card">
+          <div class="stat-label">${escapeHtml(s.label)}</div>
+          <div class="stat-value">${escapeHtml(String(s.value))}</div>
+        </div>
+      `).join("");
+    }
+
+    function countBy(list, predicate) {
+      return list.reduce((sum, x) => sum + (predicate(x) ? 1 : 0), 0);
+    }
+
+    function renderTimeline(list) {
+      const sorted = [...list].sort((a, b) => new Date(a.date) - new Date(b.date));
+
+      resultSummary.textContent = `当前共匹配 ${sorted.length} 条档案（总库 ${archives.length} 条）。`;
+
+      if (!sorted.length) {
+        timelineList.innerHTML = "";
+        noData.style.display = "block";
+        return;
+      }
+
+      noData.style.display = "none";
+      timelineList.innerHTML = sorted.map(item => createCardHTML(item)).join("");
+    }
+
+    function createCardHTML(item) {
+      const typeClass = item.archiveType === "狂热档案"
+        ? "type-hype"
+        : item.archiveType === "崩溃档案"
+          ? "type-crash"
+          : "type-reform";
+
+      const badgeClass = item.archiveType === "狂热档案"
+        ? "badge badge-hype"
+        : item.archiveType === "崩溃档案"
+          ? "badge badge-crash"
+          : "badge badge-reform";
+
+      return `
+        <article class="archive-card ${typeClass}">
+          <div class="archive-head">
+            <div class="archive-meta-line">
+              <span class="badge">档案编号 ${escapeHtml(item.id)}</span>
+              <span class="badge">${escapeHtml(item.date)}</span>
+              <span class="${badgeClass}">${escapeHtml(item.archiveType)}</span>
+              <span class="badge">阶段：${escapeHtml(item.phase)}</span>
+              <span class="badge">核对：${escapeHtml(item.verificationStatus)}</span>
+              ${item.verificationStatus === "未核" ? '<span class="badge badge-unverified">⚠ 待核重点</span>' : ""}
+              <span class="badge">证据等级：${escapeHtml(item.evidenceLevel)}</span>
+            </div>
+            <h3 class="archive-title">${escapeHtml(item.eventName)}</h3>
+            <p class="archive-sub">原始报道标题：${escapeHtml(item.title)}</p>
+          </div>
+
+          <div class="archive-body">
+            <div class="summary">
+              <strong>关键表述：</strong>${escapeHtml(item.quote)}
+            </div>
+            ${item.verificationStatus === "未核" ? `<div class="unverified-alert"><strong>未核提示：</strong>该条仍处于待核对状态，请勿作为最终史实结论使用。</div>` : ""}
+            <div class="warning">
+              <strong>警示箴言：</strong>${escapeHtml(item.warning)}
+            </div>
+
+            <details>
+              <summary>展开详情</summary>
+              <div class="details-grid">
+                ${detailItem("档案编号", item.id)}
+                ${detailItem("日期", item.date)}
+                ${detailItem("事件名称", item.eventName)}
+                ${detailItem("市场阶段", item.phase)}
+                ${detailItem("档案类型", item.archiveType)}
+                ${detailItem("原始报道标题", item.title)}
+                ${detailItem("来源", item.source)}
+                ${detailItem("关键表述", item.quote)}
+                ${detailItem("表述类型", item.quoteType || "待标注")}
+                ${detailItem("当日市场数据", item.marketData)}
+                ${detailItem("现场氛围描述", item.atmosphere)}
+                ${detailItem("事后验证", item.hindsight)}
+                ${detailItem("警示箴言", item.warning)}
+                ${detailItem("证据等级", item.evidenceLevel)}
+                ${detailItem("核对状态", item.verificationStatus)}
+                ${detailItem("标签", (item.tags || []).join(" / "))}
+              </div>
+            </details>
+          </div>
+        </article>
+      `;
+    }
+
+    function detailItem(key, value) {
+      return `
+        <div class="item">
+          <div class="k">${escapeHtml(key)}</div>
+          <div class="v">${escapeHtml(String(value ?? ""))}</div>
+        </div>
+      `;
+    }
+
+    function escapeHtml(str) {
+      return str
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+  </script>
+</body>
+</html>
